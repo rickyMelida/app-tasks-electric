@@ -7,7 +7,9 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: 'root'
 })
 export class TasksServicesService {
-  global = 'http://localhost:1900/api/';
+  server = `http://${localStorage.getItem('ip')}:${localStorage.getItem('port')}/`;
+
+  global = `${this.server}api/`;
 
   constructor(private _http: HttpClient) { }
 
@@ -17,12 +19,12 @@ export class TasksServicesService {
 
   addPendingTask(tasks, token) {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this._http.post(this.global + 'task/add-pending-task', tasks, { headers: header });
+    return this._http.post(this.global + 'task/set-pending-task', tasks, { headers: header });
   }
 
   addFinishedTask(tasks, token) {
-    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this._http.post(this.global + 'task/add-finished-task', tasks, { headers: header });
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`).append('Access-Control-Allow-Origin', 'http://127.0.0.1:5000/api/task/set-finished-task');
+    return this._http.post(this.global + 'task/set-finished-task', tasks, { headers: header });
 
   }
 

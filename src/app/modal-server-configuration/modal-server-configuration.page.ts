@@ -24,7 +24,7 @@ export class ModalServerConfigurationPage implements OnInit {
     localStorage.setItem('ip', this.server.ip);
     localStorage.setItem('server', this.server.serv);
     localStorage.setItem('port', this.server.port);
-    this.modalController.dismiss({});
+    this.modalController.dismiss({  data: this.server});
   }
 
 }

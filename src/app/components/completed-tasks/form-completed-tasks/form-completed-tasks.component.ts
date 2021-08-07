@@ -57,6 +57,7 @@ export class FormCompletedTasksComponent implements OnInit {
   }
 
   save() {
+    this.completedTask.username = localStorage.getItem('username');
     this.messageError = new Array();
     const validateForm = this.validateForm(this.completedTask, this.image_before, this.image_after);
 

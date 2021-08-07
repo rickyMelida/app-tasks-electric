@@ -11,30 +11,29 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage implements OnInit {
   dataUser: any;
   alert: boolean = false;
   messageError: string;
-  server: string;
+  server: string = !localStorage.getItem('server') ? 'firebase' : localStorage.getItem('server');
 
   constructor(private authService: AuthService, private router: Router, public modalController: ModalController) {
-    this.dataUser = {
-      username: '',
-      email: '',
-      password: ''
-    };
+    this.dataUser = { username: '', email: '', password: '' };
   }
 
   ngOnInit() {
-    this.server = localStorage.getItem('server');
+    localStorage.clear();
+    localStorage.setItem('ip', '127.0.0.1');
+    localStorage.setItem('port', '5000');
   }
 
   getDataUser() {
     this.authService.signin(this.dataUser).toPromise()
       .then((res: any) => {
-        localStorage.setItem('server', this.server);
-        localStorage.setItem('username', res.user);
+        localStorage.setItem('username', res.username);
         localStorage.setItem('token', res.token);
+        console.log(res)
         this.router.navigate(['/main']);
       })
       .catch(err => {
@@ -48,7 +47,16 @@ export class LoginPage implements OnInit {
       cssClass: 'my-styles'
     });
 
+    const  data  = (await modal).onDidDismiss().then((res: any)=>{
+      this.server = res.data.data.serv;
+
+    }).catch(err=>{
+      console.log(err);
+      
+    })
+
     return (await modal).present();
   }
+
 
 }

@@ -7,7 +7,7 @@
       <div class="brand-title">Eléctrica PLG</div>
 
 
-      <ion-item *ngIf="server == 'local'; else sFirebase">
+      <div *ngIf="server == 'local'; else sFirebase">
         <div class="inputs">
           <form #useForm="ngForm" (ngSubmit)="getDataUser()">
             <label>Usuario</label>
@@ -19,7 +19,7 @@
             <button type="submit">LOGIN</button>
           </form>
         </div>
-      </ion-item>
+      </div>
 
       <ng-template #sFirebase>
         <div class="inputs">

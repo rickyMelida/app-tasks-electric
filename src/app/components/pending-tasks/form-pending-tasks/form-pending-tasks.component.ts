@@ -34,15 +34,17 @@ export class FormPendingTasksComponent implements OnInit {
   messageError: Array<string>;
 
   constructor(private taskPendingService: TasksServicesService, public toastController: ToastController) {
-    this.pendingTask = {
-      state: 'Pendiente',
-      type: '',
-      turn: '',
-      description: ''
-    };
+    
   }
 
   ngOnInit() {
+    this.pendingTask = {
+      type: '',
+      turn: '',
+      description: '',
+      username: localStorage.getItem('username')
+    };
+    
   }
 
   save() {
@@ -58,10 +60,10 @@ export class FormPendingTasksComponent implements OnInit {
           this.messageToast(this.message);
           this.reset();
         },
-          (err: any) => {
-            this.message.text = err.message;
-            this.message.type = 'danger';
-          });
+        (err: any) => {
+          this.message.text = err.message;
+          this.message.type = 'danger';
+        });
     } else {
       this.alertError = true;
       for (const err of validateForm) {

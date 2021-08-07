@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface Task {
-  taskNumber?: number;
+  task_number?: number;
   type: string;
   state?: string;
   description: string;
@@ -9,9 +9,10 @@ export interface Task {
   start_time?: string;
   end_time?: string;
   hour_man?: string;
-  imageBefore?: string;
-  imageAfter?: string;
+  image_before?: string;
+  image_after?: string;
   turn: string;
   name?: string;
   position?: string;
+  username?: string;
 }

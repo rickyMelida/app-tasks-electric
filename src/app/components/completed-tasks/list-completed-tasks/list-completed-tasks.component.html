@@ -9,10 +9,10 @@
       <div id="task-{{i+1}}" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="{{ task.imageBefore }}" class="d-block w-100" alt="...">
+            <img src="{{ task.image_before }}" class="d-block w-100" alt="...">
           </div>
           <div class="carousel-item">
-            <img src="{{ task.imageAfter }}" class="d-block w-100" alt="...">
+            <img src="{{ task.image_after }}" class="d-block w-100" alt="...">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#task-'+i+1"
@@ -28,7 +28,7 @@
       </div>
       <div class="border py-3 mb-3">
         <div class="title">
-          <strong>Tarea # {{ task.taskNumber }} </strong>
+          <strong>Tarea # {{ task.task_number }} </strong>
         </div>
 
         <div class="descripcion">
