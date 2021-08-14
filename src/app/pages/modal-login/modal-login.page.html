@@ -19,13 +19,13 @@
       <input type="password" name="password" #password="ngModel" [(ngModel)]="dataAdmin.password"
         placeholder="Contraseña">
     </div>
-
+    
     <input class="button" type="submit" (click)="authAdmin()" value='Ingresar'>
   </div>
 
 </ion-content>
 <div class="container">
   <div class="alert alert-danger" role="alert">
-    Debes iniciar sesión como administrador, para ver esta sección.
+    {{ messageError }}
   </div>
 </div>

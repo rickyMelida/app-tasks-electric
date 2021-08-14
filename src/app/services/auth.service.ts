@@ -16,8 +16,12 @@ export class AuthService {
     return this._http.post(this.global + 'signin', dataUser);
   }
 
-  adminValidate(token: any) {
-    return this._http.get('http://localhost:1900/api/admin/verify-token?token=' + token);
+  signinAdmin(dataUser) {
+    return this._http.post(this.global + 'signin-admin', dataUser);
+  }
+
+  verifyToken(token: any) {
+    return this._http.get(this.global + '/token-verify?token=' + token);
   }
 
 }

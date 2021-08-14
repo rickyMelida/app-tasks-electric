@@ -33,11 +33,10 @@ export class LoginPage implements OnInit {
       .then((res: any) => {
         localStorage.setItem('username', res.username);
         localStorage.setItem('token', res.token);
-        console.log(res)
         this.router.navigate(['/main']);
       })
       .catch(err => {
-        console.log(err.error);
+        console.log(err);
       });
   }
 

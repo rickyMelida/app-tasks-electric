@@ -21,26 +21,25 @@ export class AuthAdminGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let tokenValidate;
 
-    const tokenAdmin: boolean = localStorage.getItem('token-admin') != null ? true : false;
+    const token: boolean = localStorage.getItem('token') != null ? true : false;
 
-    if (tokenAdmin) {
-      this.authService.adminValidate(localStorage.getItem('token-admin'))
+    if (token) {
+      this.authService.verifyToken(localStorage.getItem('token'))
         .toPromise()
         .then((res: any) => {
-          tokenValidate = res.data.rol === 'Admin' ? true : false;
+          tokenValidate = res.user.rol === 'Admin' ? true : false;
           this.redirect(tokenValidate);
         })
         .catch(error => {
           tokenValidate = false;
           this.redirect(tokenValidate);
         });
-
     } else {
       console.log(`No existe el token admin`);
     }
 
-    this.redirect(tokenAdmin);
+    this.redirect(token);
 
-    return tokenAdmin;
+    return token;
   }
 }
