@@ -12,11 +12,10 @@ export class ListUserComponent implements OnInit {
   constructor(private userService: UsersServiceService) { }
   users: Array<User> = new Array();
   ngOnInit() {
-    this.userService.getUser(localStorage.getItem('token'))
+    this.userService.getUsers(localStorage.getItem('token'))
     .toPromise()
     .then((res: any)=>{
-      this.users = res.user;
-      console.log(this.users);
+      this.users = res.users;
     })
     .catch(err=>{
       console.log(err);

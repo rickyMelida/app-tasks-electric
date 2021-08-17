@@ -6,7 +6,6 @@
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">Nombre</th>
                 <th scope="col">Usuario</th>
                 <th scope="col">Contraseña</th>
                 <th scope="col"></th>
@@ -15,7 +14,6 @@
             </thead>
             <tbody>
               <tr *ngFor="let user of users">
-                <td>Nombre</td>
                 <td>{{ user.username }}</td>
                 <td><input type="password" value="{{ user.password }}" id=""  disabled></td>
                 <td>

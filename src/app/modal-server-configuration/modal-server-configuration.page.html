@@ -4,6 +4,7 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   <div class="container">
     <div class="row">
@@ -28,8 +29,8 @@
         <ion-label>Puerto: </ion-label>
         <ion-input placeholder="ej: 80" [(ngModel)]='server.port'></ion-input>
       </ion-item>
-
-      <button type="submit" class="btn btn-primary w-50 mx-auto my-3" (click)="getData()">Guardar</button>
+      <button type="button" class="btn btn-primary w-25" (click)="getData()">Guardar</button>
+      <button type="button" class="btn btn-danger w-25" (click)="closeModal()">Cancelar</button>
     </div>
   </div>
 

@@ -9,18 +9,19 @@
 
 <ion-content>
   <div class="form">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" width="100">
-    <strong>Admin</strong>
-    <div>
-      <input type="text" name="username" #username="ngModel" [(ngModel)]="dataAdmin.username" placeholder="Usuario">
-    </div>
+    <form #useForm="ngForm" (ngSubmit)="authAdmin()">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png" alt="" width="100">
+      <strong>Admin</strong>
+      <div>
+        <input type="text" name="username" #username="ngModel" [(ngModel)]="dataAdmin.username" placeholder="Usuario">
+      </div>
 
-    <div>
-      <input type="password" name="password" #password="ngModel" [(ngModel)]="dataAdmin.password"
-        placeholder="Contraseña">
-    </div>
+      <div>
+        <input type="password" name="password" #password="ngModel" [(ngModel)]="dataAdmin.password" placeholder="Contraseña">
+      </div>
     
-    <input class="button" type="submit" (click)="authAdmin()" value='Ingresar'>
+      <input class="button" type="submit" value='Ingresar'>
+    </form>
   </div>
 
 </ion-content>

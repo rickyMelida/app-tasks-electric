@@ -5,12 +5,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UsersServiceService {
-  urlGlobal = 'http://localhost:1900/api/user/get-users';
+  server = `http://${localStorage.getItem('ip')}:${localStorage.getItem('port')}/`;
+
+  global = `${this.server}api/user/`;
 
   constructor(private _http: HttpClient) { }
 
-  getUser(token) {
+  getUsers(token) {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this._http.get(this.urlGlobal, { headers: header });
+    return this._http.get(this.global + 'get-users', { headers: header });
   }
 }

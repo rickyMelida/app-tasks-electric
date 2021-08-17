@@ -20,6 +20,10 @@ export class ModalServerConfigurationPage implements OnInit {
   ngOnInit() {
   }
 
+  closeModal() {
+    this.modalController.dismiss();
+  }
+
   getData() {
     localStorage.setItem('ip', this.server.ip);
     localStorage.setItem('server', this.server.serv);

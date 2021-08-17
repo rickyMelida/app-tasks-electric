@@ -7,13 +7,14 @@ import { Global } from '../global';
   providedIn: 'root'
 })
 export class TechnicianService {
-  urlGlobal: string;
+  server = `http://${localStorage.getItem('ip')}:${localStorage.getItem('port')}/`;
+
+  global = `${this.server}api/technician/`;
 
   constructor(private _http: HttpClient) { }
 
   getTechnicians(token) {
-    this.urlGlobal = 'http://localhost:1900/api/technician/get-technicians';
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this._http.get(this.urlGlobal, { headers: header });
+    return this._http.get(this.global + 'get-technicians', { headers: header });
   }
 }

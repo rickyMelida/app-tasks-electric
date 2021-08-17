@@ -10,72 +10,14 @@
 <ion-content>
   <ion-item>
     <ion-label>Filtrar por</ion-label>
-    <ion-select value="completed" [(ngModel)]="typeTask">
-      <ion-select-option value="work-type">Tipo de trabajo</ion-select-option>
-      <ion-select-option value="state">Estado</ion-select-option>
+    <ion-select value="completed" [(ngModel)]="typeTask" (ngModelChange)="changeFilter(typeTask)">
+      <ion-select-option value="type">Tipo de trabajo</ion-select-option>
       <ion-select-option value="turn">Turno</ion-select-option>
       <ion-select-option value="technician">Técnico</ion-select-option>
-      <ion-select-option value="day">Dia</ion-select-option>
-      <ion-select-option value="month">Mes</ion-select-option>
-      <ion-select-option value="year">Año</ion-select-option>
     </ion-select>
   </ion-item>
-
-  <ion-item>
-    <div class="container">
-      <div [ngSwitch]="typeTask">
-        <ion-item *ngSwitchCase="'work-type'">
-          <ion-label>Tipo de Trabajo</ion-label>
-          <ion-select value="completed">
-            <ion-select-option value="pending">Trabajo1</ion-select-option>
-            <ion-select-option value="completed">Trabajo2</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'state'">
-          <ion-label>Estado</ion-label>
-          <ion-select value="completed">
-            <ion-select-option value="pending">{{ filter[1] | titlecase}}</ion-select-option>
-            <ion-select-option value="completed">Pendiente</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'turn'">
-          <ion-label>Turno</ion-label>
-          <ion-select value="completed">
-            <ion-select-option value="pending">Mañana</ion-select-option>
-            <ion-select-option value="completed">Tarde</ion-select-option>
-            <ion-select-option value="completed">Noche</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'technician'">
-          <ion-label>Tecnicos</ion-label>
-          <ion-select value="completed">
-            <ion-select-option value="pending">Tecnico1</ion-select-option>
-            <ion-select-option value="pending">Tecnico2</ion-select-option>
-            <ion-select-option value="pending">Tecnico3</ion-select-option>
-            <ion-select-option value="pending">Tecnico3</ion-select-option>
-            <ion-select-option value="pending">Tecnico5</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'day'">
-          <input type="date" class="form-control" id="">
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'month'">
-          <input type="month" class="form-control" id="">
-        </ion-item>
-
-        <ion-item *ngSwitchCase="'year'">
-          <input type="number" class="form-control" id="" placeholder="ej: 2019">
-        </ion-item>
-      </div>
-    </div>
-  </ion-item>
   <div>
-    <app-area-chart></app-area-chart>
+    <app-area-chart data="{{hours}}"></app-area-chart>
   </div>
 
   <div>
