@@ -18,7 +18,7 @@ export class HourReportPage implements OnInit {
   constructor(private loadingController: LoadingController, private taskServices: TasksServicesService) { }
 
   ngOnInit() {
-    this.typeTask = 'type';
+    this.typeTask = 'turn';
     this.loading();
   }
 
@@ -29,7 +29,6 @@ export class HourReportPage implements OnInit {
         element.hours = this.parseHourToInteger(element.hours);
       });
       this.hours = JSON.stringify({hours: res.hours, filter: filter});
-      console.log(res)
     })
     .catch((err: any) => {
       console.log(err);

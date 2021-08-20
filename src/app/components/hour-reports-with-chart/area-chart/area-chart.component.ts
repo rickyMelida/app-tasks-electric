@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
 import { GoogleChartInterface } from 'ng2-google-charts';
 import { Hour } from 'src/app/models/hours.interface';
@@ -8,22 +8,13 @@ import { Hour } from 'src/app/models/hours.interface';
   templateUrl: './area-chart.component.html',
   styleUrls: ['./area-chart.component.scss'],
 })
-export class AreaChartComponent implements OnInit {
+export class AreaChartComponent implements OnInit, OnChanges {
   @Input() data: any;
   hours: Array<Hour> = new Array();
-
-  myDataTable = [
-    ['Task', 'Hours per Day'],
-    ['Work', 11],
-    ['Eat', 2],
-    ['Commute', 2],
-    ['Watch TV', 2],
-    ['Sleep', 7]
-  ]
   dataExist: boolean = false;
-
-  public pieChart: GoogleChartInterface;
-
+  filter: string;
+  pieChart: GoogleChartInterface;
+  myDataTable = [];
 
   public columnChart: GoogleChartInterface = {
     chartType: 'ColumnChart',
@@ -40,9 +31,12 @@ export class AreaChartComponent implements OnInit {
   };
 
   constructor(private loadingController: LoadingController) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    this.loading();
+  }
 
   ngOnInit() {
-    this.loading();
+    this.loading();    
   }
 
   setDataTableForName(arr: Array<Hour>, filter: string) {
@@ -50,7 +44,7 @@ export class AreaChartComponent implements OnInit {
     let dataP = [];
     result.push(['Técnicos', 'Horas Hombre'])
     arr.forEach(res=>{
-      dataP.push(res.name);
+      dataP.push(res[filter]);
       dataP.push(res.hours);
       result.push(dataP);
       dataP = [];
@@ -76,18 +70,21 @@ export class AreaChartComponent implements OnInit {
     });
     await loading.present();
     const { role, data } = await loading.onDidDismiss();
-
+    
     try {
       
       this.hours = this.orderTask(JSON.parse(this.data).hours);
-      
-      this.myDataTable = this.setDataTableForName(this.hours, 'name');
+      this.filter = JSON.parse(this.data).filter;
+      this.myDataTable = this.setDataTableForName(this.hours, this.filter);
       this.pieChart = {
         chartType: 'PieChart',
-        dataTable: this.myDataTable,
         options: { 'title': 'Tasks' },
       };
+      
+      this.draw(this.myDataTable)
       this.dataExist = true;
+      
+      console.log(this.myDataTable);
       
     } catch (error) {
       console.log(error);
@@ -112,5 +109,10 @@ export class AreaChartComponent implements OnInit {
     
     return sortData;
   }
+
+  draw(data) {
+    this.pieChart.dataTable = data;
+  }
+
 
 }
