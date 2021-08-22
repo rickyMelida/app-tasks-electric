@@ -4,7 +4,7 @@
     <ion-list-header>Horas por técnico</ion-list-header>
     <div *ngFor="let item of myData">
       <ion-item>
-        <ion-label>{{ item.name }}</ion-label>
+        <ion-label>{{ item.name | titlecase}}</ion-label>
         <ion-note slot="end" color="primary">{{ item.hours }} hs</ion-note>
       </ion-item>
     </div>

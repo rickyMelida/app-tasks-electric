@@ -25,6 +25,19 @@
   </div>
 
   <div>
-    <app-hour-reports-per-technician data="{{hours}}"></app-hour-reports-per-technician>
+    <container-element [ngSwitch]="typeTask">
+      <div *ngSwitchCase="'taskType'">
+        <app-hour-reports-per-task data="{{hours}}"></app-hour-reports-per-task>
+      </div>
+
+      <div *ngSwitchCase="'turn'">
+        <app-hour-report-per-turn data="{{hours}}"></app-hour-report-per-turn>
+      </div>
+
+      <div *ngSwitchCase="'name'">
+        <app-hour-reports-per-technician data="{{hours}}"></app-hour-reports-per-technician>
+      </div>
+
+   </container-element>
   </div>
 </ion-content>

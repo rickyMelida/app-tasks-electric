@@ -45,6 +45,8 @@ export class HourReportPage implements OnInit {
     this.loadHours(this.typeTask);
 
     const { role, data } = await loading.onDidDismiss();
+    console.log(this.typeTask);
+    
   }
 
   parseHourToInteger(hour: string) {

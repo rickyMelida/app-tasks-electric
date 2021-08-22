@@ -1,3 +1,13 @@
-<p>
-  hour-reports-per-task works!
-</p>
+<div class="container my-5">
+
+  <ion-list class="mx-3">
+    <ion-list-header>Horas por técnico</ion-list-header>
+    <div *ngFor="let item of myData">
+      <ion-item>
+        <ion-label>{{ item.taskType | titlecase }}</ion-label>
+        <ion-note slot="end" color="primary">{{ item.hours }} hs</ion-note>
+      </ion-item>
+    </div>
+  </ion-list>
+
+</div>

@@ -13,13 +13,12 @@ export class ColumnChartComponent implements OnInit, OnChanges {
   columnChart: GoogleChartInterface = {
     chartType: 'ColumnChart',
     dataTable: [
-      ['Country', 'Hours',],
-      ['Germany', 700],
-      ['USA', 300],
-      ['Brazil', 400],
-      ['Canada', 500],
-      ['France', 600],
-      ['RU', 1000]
+      ['Técnicos', 'Horas Hombre'],
+      ['Ricardo', 0],
+      ['Miller', 0],
+      ['Ramon', 0],
+      ['Luis', 0],
+      ['Victor', 0]
     ],
     options: {title: 'Tareas'}
   };
@@ -37,20 +36,23 @@ export class ColumnChartComponent implements OnInit, OnChanges {
     this.loading();
   }
 
-  setDataTable(arr: Array<Hour>, filter: string) {
-    let dataTablePie = this.columnChart.dataTable;
+  setDataTable(arr: Array<any>, filter: string) {
+    let dataTableColumn = this.columnChart.dataTable;
+    dataTableColumn[0][0] = filter;
 
-    dataTablePie[0][0] = filter;
-
-    for(let j=1; j < dataTablePie.length; j++) {
+    
+    for(let j=1; j < dataTableColumn.length; j++) {
       arr.forEach(element=>{
-        if(element.name == dataTablePie[j][0]) {
-          dataTablePie[j][1] = element.hours;
-          dataTablePie[j][0] = element[filter];
-        } 
+        if(element.name.includes(dataTableColumn[j][0])) {
+          dataTableColumn[j][1] = element.hours;
+          dataTableColumn[j][0] = element[filter];
+        }        
       })
     }
 
+    dataTableColumn.length = dataTableColumn.length - (arr.length-1);
+    this.columnChart.component.draw();
+    
   }
 
   async loading() {
@@ -66,8 +68,8 @@ export class ColumnChartComponent implements OnInit, OnChanges {
       
       this.hours = this.orderTask(JSON.parse(this.data).hours);
       this.filter = JSON.parse(this.data).filter;
-
       this.filter == 'turn'  ?  this.setDataTable(this.hours, this.filter) :  this.draw(this.hours, this.filter);
+      
       
       this.dataExist = true;
     } catch (error) {
@@ -95,20 +97,13 @@ export class ColumnChartComponent implements OnInit, OnChanges {
   }
 
   draw(arr: Array<any>, filter) {
-    let dataTableColum = this.columnChart.dataTable;
-    dataTableColum[0][0] = filter;
+    let dataTablePie = this.columnChart.dataTable;
+    dataTablePie[0][0] = filter;
 
     arr.forEach((element, i)=>{
-      dataTableColum[i+1][1] = element.hours;
-      dataTableColum[i+1][0] = element[filter];
+        dataTablePie[i+1][1] = element.hours;
+        dataTablePie[i+1][0] = element[filter];
     })
-
-    for(let j=arr.length-1; j <= dataTableColum.length; j++) {
-      console.log(`cuenta ${j} veces`);
-      dataTableColum.pop();
-      
-    }
-
     
     this.columnChart.component.draw();
   }
