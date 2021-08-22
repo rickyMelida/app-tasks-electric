@@ -2,30 +2,12 @@
 
   <ion-list class="mx-3">
     <ion-list-header>Horas por técnico</ion-list-header>
-    <ion-item>
-      <ion-label>Ricardo Mélida</ion-label>
-      <ion-note slot="end" color="primary">11 hs</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Ramón Coronel</ion-label>
-      <ion-note slot="end" color="primary">22 hs</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Victor Velázquez</ion-label>
-      <ion-note slot="end" color="primary">23 hs</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Miller Sosa</ion-label>
-      <ion-note slot="end" color="primary">12 hs</ion-note>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Luis Rotela</ion-label>
-      <ion-note slot="end" color="primary">15 hs</ion-note>
-    </ion-item>
+    <div *ngFor="let item of myData">
+      <ion-item>
+        <ion-label>{{ item.name }}</ion-label>
+        <ion-note slot="end" color="primary">{{ item.hours }} hs</ion-note>
+      </ion-item>
+    </div>
   </ion-list>
 
 </div>

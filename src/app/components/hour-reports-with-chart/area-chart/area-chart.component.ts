@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { LoadingController } from '@ionic/angular';
-import { GoogleChartInterface } from 'ng2-google-charts';
+import { GoogleChartInterface } from 'ng2-google-charts/ng2-google-charts';
 import { Hour } from 'src/app/models/hours.interface';
 
 @Component({
@@ -13,24 +13,21 @@ export class AreaChartComponent implements OnInit, OnChanges {
   hours: Array<Hour> = new Array();
   dataExist: boolean = false;
   filter: string;
-  pieChart: GoogleChartInterface;
-  myDataTable = [];
-
-  public columnChart: GoogleChartInterface = {
-    chartType: 'ColumnChart',
+  pieChart: GoogleChartInterface = {
+    chartType: 'PieChart',
     dataTable: [
-      ['Task', 'Hours per Day'],
-      ['Work', 11],
-      ['Eat', 2],
-      ['Commute', 2],
-      ['Watch TV', 2],
-      ['Sleep', 7]
-    ],
-    //firstRowIsData: true,
-    options: { 'title': 'Tasks Column' },
-  };
+    ['Técnicos', 'Horas Hombre'],
+    ['Ricardo Melida', 0],
+    ['Miller Sosa', 0],
+    ['Ramon Coronel', 0],
+    ['Luis Rotela', 0],
+    ['Victor Velazquez', 0]
+  ],
+  options: {'title': 'Tasks'},
+};
 
   constructor(private loadingController: LoadingController) { }
+
   ngOnChanges(changes: SimpleChanges): void {
     this.loading();
   }
@@ -39,26 +36,19 @@ export class AreaChartComponent implements OnInit, OnChanges {
     this.loading();    
   }
 
-  setDataTableForName(arr: Array<Hour>, filter: string) {
-    let result = [];
-    let dataP = [];
-    result.push(['Técnicos', 'Horas Hombre'])
-    arr.forEach(res=>{
-      dataP.push(res[filter]);
-      dataP.push(res.hours);
-      result.push(dataP);
-      dataP = [];
-    });
+  setDataTable(arr: Array<Hour>, filter: string) {
+    let dataTablePie = this.pieChart.dataTable;
 
-    return result;
+    dataTablePie[0][0] = filter;
 
-  }
-
-  hourForInt(hourStr: string): number {
-    let minutes = parseFloat(hourStr.slice(3, 5));
-    let hour = parseFloat(hourStr.slice(0, 2));
-
-    return hour + (minutes/60);
+    for(let j=1; j < dataTablePie.length; j++) {
+      arr.forEach(element=>{
+        if(element.name == dataTablePie[j][0]) {
+          dataTablePie[j][1] = element.hours;
+          dataTablePie[j][0] = element[filter];
+        } 
+      })
+    }
 
   }
 
@@ -75,17 +65,10 @@ export class AreaChartComponent implements OnInit, OnChanges {
       
       this.hours = this.orderTask(JSON.parse(this.data).hours);
       this.filter = JSON.parse(this.data).filter;
-      this.myDataTable = this.setDataTableForName(this.hours, this.filter);
-      this.pieChart = {
-        chartType: 'PieChart',
-        options: { 'title': 'Tasks' },
-      };
+
+      this.filter == 'turn'  ?  this.setDataTable(this.hours, this.filter) :  this.draw(this.hours, this.filter);
       
-      this.draw(this.myDataTable)
       this.dataExist = true;
-      
-      console.log(this.myDataTable);
-      
     } catch (error) {
       console.log(error);
       this.dataExist = false;
@@ -110,9 +93,15 @@ export class AreaChartComponent implements OnInit, OnChanges {
     return sortData;
   }
 
-  draw(data) {
-    this.pieChart.dataTable = data;
+  draw(arr: Array<any>, filter) {
+    let dataTablePie = this.pieChart.dataTable;
+    dataTablePie[0][0] = filter;
+
+    arr.forEach((element, i)=>{
+        dataTablePie[i+1][1] = element.hours;
+        dataTablePie[i+1][0] = element[filter];
+    })
+    
+    this.pieChart.component.draw();
   }
-
-
 }

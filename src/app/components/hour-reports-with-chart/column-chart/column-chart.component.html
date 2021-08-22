@@ -1,3 +1,18 @@
-<p>
-  column-chart works!
-</p>
+<div class="container">
+  <div class="row" *ngIf="dataExist; else noExist">
+    <div class="col-md-12">
+      <google-chart [data]="columnChart"></google-chart>
+    </div>
+  </div>
+
+
+  <ng-template #noExist>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-danger" role="alert">
+          Error al extraer los datos
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
