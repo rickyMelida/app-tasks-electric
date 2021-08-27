@@ -24,6 +24,7 @@ export class ListCompletedTasksComponent implements OnInit {
   index = 0;
 
   existTasks: boolean;
+  dataExample = "dataExample";
 
   constructor(
     public modalController: ModalController,

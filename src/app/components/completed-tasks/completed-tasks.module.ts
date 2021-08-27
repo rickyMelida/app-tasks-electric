@@ -7,6 +7,7 @@ import { ListCompletedTasksComponent } from './list-completed-tasks/list-complet
 import { DetailFinishedTaskComponent } from './detail-finished-task/detail-finished-task.component';
 import { ImageSliderComponent } from './image-slider/image-slider.component';
 
+
 @NgModule({
   declarations: [
     FormCompletedTasksComponent,
