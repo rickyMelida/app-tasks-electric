@@ -14,9 +14,6 @@ export class ImageSliderComponent implements OnInit {
 
   ngOnInit() {
     this.idTask = 'task-'+ this.idTask;
-    console.log(this.idTask);
-    
-    
   }
 
 }

@@ -1,3 +1,69 @@
-<p>
-  form-technician works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Agregar Nuevo {{ title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <ion-item>
+        <ion-label>Nombre del Técnico:  </ion-label>
+        <ion-input placeholder="ej: Juan Pérez" [(ngModel)]='technicianData.name'></ion-input>
+      </ion-item>
+      
+      <div class="select-server">
+        <ion-item>
+          <ion-label>Cargo</ion-label>
+          <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='technicianData.position'>
+            <ion-select-option value="junior">Junior</ion-select-option>
+            <ion-select-option value="senior">Senior</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+      <div class="select-server">
+        <ion-item>
+          <ion-label>Turno</ion-label>
+          <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='technicianData.turn'>
+            <ion-select-option value="manana">Mañana</ion-select-option>
+            <ion-select-option value="tarde">Tarde</ion-select-option>
+            <ion-select-option value="noche">Noche</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+
+      <ion-item>
+        <ion-label>Nombre de Usuario: </ion-label>
+        <ion-input placeholder="ej: J_Perez" [(ngModel)]='technicianData.username'></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Email: </ion-label>
+        <ion-input type="email" placeholder="ej: juanperez@mail.com" [(ngModel)]='technicianData.email'></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Password: </ion-label>
+        <ion-input type="password" placeholder="" [(ngModel)]='technicianData.password'></ion-input>
+      </ion-item>
+
+      <div class="select-server">
+        <ion-item>
+          <ion-label>Rol</ion-label>
+          <ion-select ok-text="Seleccionar" cancel-text="Cancelar" [(ngModel)]='technicianData.rol'>
+            <ion-select-option value="user">Usuario</ion-select-option>
+            <ion-select-option value="admin">Administrador</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </div>
+
+
+      <button type="button" class="btn btn-primary w-25" (click)="getData()">Guardar</button>
+      <button type="button" class="btn btn-danger w-25" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+
+</ion-content>

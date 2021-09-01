@@ -8,17 +8,12 @@ import { TasksServicesService } from 'src/app/services/tasks-services.service';
   styleUrls: ['./hour-report.page.scss'],
 })
 export class HourReportPage implements OnInit {
-  typeTask: string;
   hours: any;
-  filter: Array<string> = [
-    'work-type',
-    'assistance',
-    'mantenimie'
-  ];
+  filter: string;
   constructor(private loadingController: LoadingController, private taskServices: TasksServicesService) { }
 
   ngOnInit() {
-    this.typeTask = 'turn';
+    this.filter = 'turn';
     this.loading();
   }
 
@@ -42,11 +37,9 @@ export class HourReportPage implements OnInit {
       duration: 1000
     });
     await loading.present();
-    this.loadHours(this.typeTask);
+    this.loadHours(this.filter);
 
     const { role, data } = await loading.onDidDismiss();
-    console.log(this.typeTask);
-    
   }
 
   parseHourToInteger(hour: string) {

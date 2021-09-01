@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Task } from 'src/app/models/task.interface';
 import { DetailFinishedTaskComponent } from '../detail-finished-task/detail-finished-task.component';
@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 })
 export class ListCompletedTasksComponent implements OnInit {
   @ViewChild(IonInfiniteScroll, { static: false }) infiniteScroll: IonInfiniteScroll;
+  @Input() buttonUp: any; 
 
   tasksFinished: Array<Task> = new Array();
   tasksPartial: Array<Task> = new Array();
@@ -35,6 +36,7 @@ export class ListCompletedTasksComponent implements OnInit {
 
   ngOnInit() {
     this.loading();
+    
   }
 
   async loading() {

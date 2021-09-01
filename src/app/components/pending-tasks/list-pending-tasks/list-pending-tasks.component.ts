@@ -95,7 +95,6 @@ export class ListPendingTasksComponent implements OnInit {
       component: DetailPendingTaskComponent,
       swipeToClose: true,
       componentProps: {
-        // eslint-disable-next-line quote-props
         'data': task
       }
     });

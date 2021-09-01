@@ -1,14 +1,16 @@
-<div class="container">
-
+<div class="container" id="container">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="existTasks;else noExistTask">
-    <div *ngFor="let task of tasksPartial; let i=index;">
-      
+  <div *ngIf="existTasks; else noExistTask">
+    <div *ngFor="let task of tasksPartial; let i = index" #container>
       <div class="mb-3">
-        <app-image-slider [imageBefore]="task.image_before" [imageAfter]="task.image_after" [idTask]="i+1"></app-image-slider>
+        <app-image-slider
+          [imageBefore]="task.image_before"
+          [imageAfter]="task.image_after"
+          [idTask]="i + 1"
+        ></app-image-slider>
       </div>
 
       <div class="border py-3 mb-3">
@@ -19,20 +21,23 @@
         <div class="descripcion">
           {{ task.description }}
         </div>
-        
+
         <div class="btn btn-primary">Ver Detalles</div>
       </div>
     </div>
-
-    <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando Tareas...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
   </div>
 
-  <ng-template #noExistTask>
-    <div class="alert alert-warning" role="alert">
-      No existen tareas finalizadas!
-    </div>
-  </ng-template>
+  <ion-infinite-scroll threshold="150px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando Tareas..."
+    >
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </div>
+
+<ng-template #noExistTask>
+  <div class="alert alert-warning" role="alert">
+    No existen tareas finalizadas!
+  </div>
+</ng-template>

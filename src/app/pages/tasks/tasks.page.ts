@@ -18,12 +18,14 @@ interface User {
 })
 export class TasksPage implements OnInit {
   @HostListener('window:scroll')
+  @ViewChild('content')content : ElementRef<HTMLIonContentElement>; 
 
   typeTask: string;
   dataPendingTask: Array<Task>;
   dataFinishedTask: Array<Task>;
   token: string;
   search: any;
+  buttonUp: boolean = false;
 
   constructor(public nav: NavController,
     private taskService: TasksServicesService,
@@ -41,8 +43,6 @@ export class TasksPage implements OnInit {
   }
 
 
-
-
   async presentLoading() {
     const loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
@@ -56,18 +56,21 @@ export class TasksPage implements OnInit {
   }
 
   btnUpEvent() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-    console.log('[scroll]', scrollPosition);
-
-    window.scroll({
-      top: 0,
-      left: 0,
-      behavior: 'smooth'
-    });
+    this.buttonUp = true;
+    setTimeout(() =>{
+      this.buttonUp = false;
+    }, 3000)
   }
 
   searchBy(event) {
     console.log(event);
+  }
+
+  eventScroll(event) {
+    //console.log(document.querySelector('ion-content'));
+    console.log(event.target.parentNode.scrollTo());
+    
+    //document.querySelector('ion-content').scrollTop(0)
+    
   }
 }

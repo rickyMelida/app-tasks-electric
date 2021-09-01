@@ -30,13 +30,19 @@ export class LoginPage implements OnInit {
 
   getDataUser() {
     this.authService.signin(this.dataUser).toPromise()
-      .then((res: any) => {
+    .then((res: any) => {
+        this.alert = false;
         localStorage.setItem('username', res.username);
         localStorage.setItem('token', res.token);
         this.router.navigate(['/main']);
+        console.log(res);
+        
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log(err);
+        
+        this.alert = true;
+        this.messageError  = err.error.text;
       });
   }
 

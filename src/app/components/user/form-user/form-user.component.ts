@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-form-user',
@@ -7,8 +8,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormUserComponent implements OnInit {
 
-  constructor() { }
+  @Input() data: any;
 
-  ngOnInit() {}
+  userData: any = {
+    name: '',
+    position: 'junior',
+    turn: 'manana',
+    username: '',
+    email: '',
+    password: '',
+    rol: 'user'
+  }
 
+
+  constructor(private modalController: ModalController) { }
+
+  ngOnInit() {
+    console.log(this.data);
+    
+  }
+
+  closeModal() {
+    this.modalController.dismiss({});
+  }
+
+  getData() {
+    console.log(this.userData);
+    this. userData = {
+      name: '',
+      position: 'junior',
+      turn: 'manana',
+      username: '',
+      email: '',
+      password: '',
+      rol: 'user'
+    }
+    
+  }
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-form-technician',
@@ -6,9 +7,39 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-technician.component.scss'],
 })
 export class FormTechnicianComponent implements OnInit {
+  @Input() title: any;
 
-  constructor() { }
+  technicianData: any = {
+    name: '',
+    position: 'junior',
+    turn: 'manana',
+    username: '',
+    email: '',
+    password: '',
+    rol: 'user'
+  }
 
-  ngOnInit() {}
+  constructor(private modalController: ModalController) { }
+
+  ngOnInit() {
+  }
+
+  closeModal() {
+    this.modalController.dismiss({});
+  }
+
+  getData() {
+    console.log(this.technicianData);
+    this. technicianData = {
+      name: '',
+      position: 'junior',
+      turn: 'manana',
+      username: '',
+      email: '',
+      password: '',
+      rol: 'user'
+    }
+    
+  }
 
 }

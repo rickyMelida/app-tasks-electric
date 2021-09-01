@@ -38,14 +38,19 @@
     </div>
   </div>
 
-  <div *ngIf="alert" class="row mt-3">
-    <div class="col-md-8 offset-md-4">
-      <div class="alert alert-danger" role="alert">
-        {{ messageError }}
-      </div>
-    </div>
-  </div>
+  
   <div class="row">
     <p link="#" color="primary" (click)="presentModal()">Configurar Servidor</p>
   </div>
+
+  <div class="row">
+    <div *ngIf="alert" class="row mt-2">
+      <div class="col-md-8 offset-md-4">
+        <div class="alert alert-danger" role="alert">
+          {{ messageError }}
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
