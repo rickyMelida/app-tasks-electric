@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
+import { Message } from 'src/app/models/message.interface';
+import { TechnicianService } from 'src/app/services/technician.service';
+import { UsersServiceService } from 'src/app/services/users-service.service';
 
 @Component({
   selector: 'app-form-technician',
@@ -16,10 +19,22 @@ export class FormTechnicianComponent implements OnInit {
     username: '',
     email: '',
     password: '',
+    checkPassword: '',
     rol: 'user'
   }
 
-  constructor(private modalController: ModalController) { }
+  response: Message = {
+    type: '',
+    text: ''
+  }
+
+
+  constructor(
+    private modalController: ModalController, 
+    private technicianService: TechnicianService,
+    private userService: UsersServiceService,
+    public toastController: ToastController
+    ) { }
 
   ngOnInit() {
   }
@@ -29,7 +44,41 @@ export class FormTechnicianComponent implements OnInit {
   }
 
   getData() {
-    console.log(this.technicianData);
+    this.technicianService.setTechnician(localStorage.getItem('token'), this.technicianData).toPromise()
+    .then((resTech:any)=>{
+      
+      this.userService.setUser(localStorage.getItem('token'), this.technicianData).toPromise()
+      .then((resUser:any)=>{ 
+        this.response = {
+          text: resTech.message,
+          type: 'success'
+        };
+        this.messageToast(this.response);
+        this.resetForm();
+      })
+      .catch((errUser)=>{ 
+        console.log(errUser) 
+      })
+      
+    })
+    .catch((errTech: any)=>{
+      console.log(errTech);
+    })
+
+    
+    
+  }
+
+  async messageToast(message: Message) {
+    const toast = await this.toastController.create({
+      message: message.text,
+      duration: 2000,
+      color: message.type
+    });
+    toast.present();
+  }
+
+  resetForm() {
     this. technicianData = {
       name: '',
       position: 'junior',
@@ -39,7 +88,6 @@ export class FormTechnicianComponent implements OnInit {
       password: '',
       rol: 'user'
     }
-    
   }
 
 }

@@ -19,6 +19,8 @@ export class ListTechnicianComponent implements OnInit {
       .toPromise()
       .then((res: any) => {
         this.technicians = res.techs;
+        console.log(res);
+        
       })
       .catch(err => {
         console.log(`error`);

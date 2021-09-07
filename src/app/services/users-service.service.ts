@@ -15,4 +15,9 @@ export class UsersServiceService {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this._http.get(this.global + 'get-users', { headers: header });
   }
+
+  setUser(token, data) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.post(this.global + 'set-user', data, {headers: header});
+  }
 }

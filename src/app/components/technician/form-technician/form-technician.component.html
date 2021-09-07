@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/main-admin" (click)="closeModal()"></ion-back-button>
+    </ion-buttons>
     <ion-title>Agregar Nuevo {{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -48,6 +51,11 @@
       <ion-item>
         <ion-label>Password: </ion-label>
         <ion-input type="password" placeholder="" [(ngModel)]='technicianData.password'></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Confirmar Password: </ion-label>
+        <ion-input type="password" placeholder="" [(ngModel)]='technicianData.checkPassword'></ion-input>
       </ion-item>
 
       <div class="select-server">

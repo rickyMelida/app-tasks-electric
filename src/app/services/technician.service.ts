@@ -17,4 +17,9 @@ export class TechnicianService {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this._http.get(this.global + 'get-technicians', { headers: header });
   }
+
+  setTechnician(token, data) {
+    const header = new HttpHeaders().set('Autorization', `Bearer ${token}`);
+    return this._http.post(this.global + 'set-technician', data, {headers: header});
+  }
 }
