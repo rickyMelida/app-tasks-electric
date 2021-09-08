@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Message } from 'src/app/models/message.interface';
 import { TechnicianService } from 'src/app/services/technician.service';
 import { UsersServiceService } from 'src/app/services/users-service.service';
@@ -11,6 +11,8 @@ import { UsersServiceService } from 'src/app/services/users-service.service';
 })
 export class FormTechnicianComponent implements OnInit {
   @Input() title: any;
+  @Input() id: any;
+  newTech: boolean = false;
 
   technicianData: any = {
     name: '',
@@ -33,10 +35,13 @@ export class FormTechnicianComponent implements OnInit {
     private modalController: ModalController, 
     private technicianService: TechnicianService,
     private userService: UsersServiceService,
-    public toastController: ToastController
+    public toastController: ToastController,
+    private loadingController: LoadingController
     ) { }
 
   ngOnInit() {
+    this.loadData();
+    
   }
 
   closeModal() {
@@ -88,6 +93,32 @@ export class FormTechnicianComponent implements OnInit {
       password: '',
       rol: 'user'
     }
+  }
+
+  async loadData() {
+    const load = await this.loadingController.create({
+      message: 'Cargando Datos..',
+      duration: 1500
+    });
+
+    await load.present();
+    const {role, data} = await load.onDidDismiss();
+
+    !this.id ? this.newTech=true : this.getDataById(this.id);;
+    
+  }
+
+  getDataById(id) {
+    this.newTech = false;
+    this.technicianService.getTechnicianById(localStorage.getItem('token'), id).toPromise()
+    .then((res: any)=>{
+      this.technicianData = res.technician;
+      
+    })
+    .catch((err:any)=>{
+      console.log(err);
+      
+    })
   }
 
 }

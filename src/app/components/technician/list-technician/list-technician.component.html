@@ -16,13 +16,13 @@
             <tbody>
               <tr *ngFor="let tech of technicians">
                 <td>{{ tech.name }}</td>
-                <td>{{ tech.position }}</td>
-                <td>{{ tech.turn }}</td>
+                <td>{{ tech.position | titlecase}}</td>
+                <td>{{ tech.turn | titlecase}}</td>
                 <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
+                  <ion-icon name="create" color="tertiary" (click)="modalUpdate(tech._id)"></ion-icon>
                 </td>
                 <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
+                  <ion-icon name="trash" color="danger" (click)="presentAlertConfirm(tech._id)"></ion-icon>
                 </td>
               </tr>
             </tbody>

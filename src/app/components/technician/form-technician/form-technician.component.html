@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/main-admin" (click)="closeModal()"></ion-back-button>
     </ion-buttons>
-    <ion-title>Agregar Nuevo {{ title }}</ion-title>
+    <ion-title>{{ title }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -68,8 +68,11 @@
         </ion-item>
       </div>
 
+      <button *ngIf="newTech; else update" type="button" class="btn btn-primary w-25" (click)="getData()">Guardar</button>
 
-      <button type="button" class="btn btn-primary w-25" (click)="getData()">Guardar</button>
+      <ng-template #update>
+        <button type="button" class="btn btn-primary w-25" (click)="getData()">Modificar</button>
+      </ng-template>
       <button type="button" class="btn btn-danger w-25" (click)="closeModal()">Cancelar</button>
     </div>
   </div>
