@@ -13,6 +13,7 @@ export class FormTechnicianComponent implements OnInit {
   @Input() title: any;
   @Input() id: any;
   newTech: boolean = false;
+  idTechnician: string;
 
   technicianData: any = {
     name: '',
@@ -22,7 +23,8 @@ export class FormTechnicianComponent implements OnInit {
     email: '',
     password: '',
     checkPassword: '',
-    rol: 'user'
+    rol: 'user',
+    id: ''
   }
 
   response: Message = {
@@ -45,12 +47,16 @@ export class FormTechnicianComponent implements OnInit {
   }
 
   closeModal() {
-    this.modalController.dismiss({});
+    this.modalController.dismiss({
+      'dismissed': true
+    });
   }
 
-  getData() {
+  setTechnician() {
     this.technicianService.setTechnician(localStorage.getItem('token'), this.technicianData).toPromise()
     .then((resTech:any)=>{
+      this.idTechnician = resTech.technician.name;
+      this.technicianData._id = this.idTechnician;
       
       this.userService.setUser(localStorage.getItem('token'), this.technicianData).toPromise()
       .then((resUser:any)=>{ 
@@ -69,8 +75,29 @@ export class FormTechnicianComponent implements OnInit {
     .catch((errTech: any)=>{
       console.log(errTech);
     })
+  }
 
-    
+
+  updateTechnician() {
+    this.technicianData['_id'] = this.id;
+    this.userService.updateUser(localStorage.getItem('token'), this.technicianData).toPromise()
+    .then((res: any)=>{
+      this.technicianService.updateTechnician(localStorage.getItem('token'), this.technicianData).toPromise()
+      .then((resTech: any) => {
+        console.log(`Se modifica los datos del usuario`);
+        
+      })
+      .catch((errTech: any)=> {
+        console.log(`Error gafarral Sr. Burn!`);
+        
+      })
+      
+      
+    })
+    .catch((err: any)=>{
+      console.log(`Error gafarral Sr. Burn!`);
+      
+    })
     
   }
 
@@ -104,7 +131,7 @@ export class FormTechnicianComponent implements OnInit {
     await load.present();
     const {role, data} = await load.onDidDismiss();
 
-    !this.id ? this.newTech=true : this.getDataById(this.id);;
+    !this.id ? this.newTech=true : this.getDataById(this.id);
     
   }
 

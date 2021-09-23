@@ -20,4 +20,14 @@ export class UsersServiceService {
     const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this._http.post(this.global + 'set-user', data, {headers: header});
   }
+
+  deleteUser(token, id) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.delete(this.global + 'delete-user', {headers: header, params: {id}})
+  }
+
+  updateUser(token,data) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.put(this.global + 'update-user', data, {headers: header})
+  }
 }

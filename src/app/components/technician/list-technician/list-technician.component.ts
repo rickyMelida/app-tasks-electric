@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Message } from 'src/app/models/message.interface';
 import { Technician } from 'src/app/models/technician.interface';
 import { TechnicianService } from 'src/app/services/technician.service';
+import { UsersServiceService } from 'src/app/services/users-service.service';
 import { FormTechnicianComponent } from '../form-technician/form-technician.component';
 
 @Component({
@@ -19,6 +20,7 @@ export class ListTechnicianComponent implements OnInit {
 
   constructor(
     private techService: TechnicianService, 
+    private userService: UsersServiceService,
     private modalController: ModalController,
     private toastController: ToastController,
     private loadingController: LoadingController,
@@ -41,7 +43,8 @@ export class ListTechnicianComponent implements OnInit {
     return await modal.present();
   }
 
-  async modalUpdate(id) {
+  async modalUpdate(id, username) {
+    
     const modal = await this.modalController.create({
       component: FormTechnicianComponent,
       swipeToClose: true,
@@ -51,16 +54,26 @@ export class ListTechnicianComponent implements OnInit {
       }
     });
 
+    //const { data } = await modal.onWillDismiss();
+    //console.log(data);
+    
     return await modal.present();
     
   }
 
-  delete(id) {
+  deleteTechnician(id) {
     this.techService.deleteTechnician(localStorage.getItem('token'), id).toPromise()
     .then((res: any)=>{
-      this.message.text = res.message;
-      this.loading().then(()=>{
-        this.messageToast(this.message);
+      this.userService.deleteUser(localStorage.getItem('token'), id).toPromise()
+      .then((resUser:any)=>{
+        this.message.text = res.message;
+        
+        this.loading().then(()=>{
+          this.messageToast(this.message);
+        })
+      })
+      .catch((errUser)=> {
+        console.log(errUser);
       })
     })
     .catch((err)=>{
@@ -99,7 +112,7 @@ export class ListTechnicianComponent implements OnInit {
     
   }
 
-  async presentAlertConfirm(id) {
+  async presentAlertConfirm(id, username) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: 'Eliminar Técnico!',
@@ -113,7 +126,7 @@ export class ListTechnicianComponent implements OnInit {
           text: 'Eliminar',
           cssClass: 'warning',
           handler: () => {
-            this.delete(id);
+            this.deleteTechnician(id);
           }
         }
       ]
@@ -121,7 +134,5 @@ export class ListTechnicianComponent implements OnInit {
 
     await alert.present();
   }
-
-
 
 }

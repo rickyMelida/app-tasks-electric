@@ -19,10 +19,10 @@
                 <td>{{ tech.position | titlecase}}</td>
                 <td>{{ tech.turn | titlecase}}</td>
                 <td>
-                  <ion-icon name="create" color="tertiary" (click)="modalUpdate(tech._id)"></ion-icon>
+                  <ion-icon name="create" color="tertiary" (click)="modalUpdate(tech._id, tech.username)"></ion-icon>
                 </td>
                 <td>
-                  <ion-icon name="trash" color="danger" (click)="presentAlertConfirm(tech._id)"></ion-icon>
+                  <ion-icon name="trash" color="danger" (click)="presentAlertConfirm(tech._id, tech.username)"></ion-icon>
                 </td>
               </tr>
             </tbody>
