@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,11 @@ export class AuthService {
 
   verifyToken(token: any) {
     return this._http.get(this.global + '/token-verify?token=' + token);
+  }
+
+  signUp(token, data) {
+    const header = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this._http.post(this.global + 'signup', data, {headers: header})
   }
 
 }

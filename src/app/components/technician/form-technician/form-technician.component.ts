@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { Message } from 'src/app/models/message.interface';
+import { AuthService } from 'src/app/services/auth.service';
 import { TechnicianService } from 'src/app/services/technician.service';
 import { UsersServiceService } from 'src/app/services/users-service.service';
 
@@ -37,6 +38,7 @@ export class FormTechnicianComponent implements OnInit {
     private modalController: ModalController, 
     private technicianService: TechnicianService,
     private userService: UsersServiceService,
+    private authService: AuthService,
     public toastController: ToastController,
     private loadingController: LoadingController
     ) { }
@@ -53,13 +55,16 @@ export class FormTechnicianComponent implements OnInit {
   }
 
   setTechnician() {
+    
     this.technicianService.setTechnician(localStorage.getItem('token'), this.technicianData).toPromise()
     .then((resTech:any)=>{
       this.idTechnician = resTech.technician.name;
       this.technicianData._id = this.idTechnician;
       
-      this.userService.setUser(localStorage.getItem('token'), this.technicianData).toPromise()
+      this.authService.signUp(localStorage.getItem('token'), this.technicianData).toPromise()
       .then((resUser:any)=>{ 
+        console.log(resUser);
+        
         this.response = {
           text: resTech.message,
           type: 'success'

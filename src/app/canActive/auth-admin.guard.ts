@@ -27,7 +27,7 @@ export class AuthAdminGuard implements CanActivate {
       this.authService.verifyToken(localStorage.getItem('token'))
         .toPromise()
         .then((res: any) => {
-          tokenValidate = res.user.rol === 'Admin' ? true : false;
+          tokenValidate = res.user.res.rol === 'Admin' ? true : false;
           this.redirect(tokenValidate);
         })
         .catch(error => {

@@ -17,10 +17,10 @@
                 <td>{{ user.username }}</td>
                 <td><input type="password" value="{{ user.password }}" id=""  disabled></td>
                 <td>
-                  <ion-icon name="create" color="tertiary"></ion-icon>
+                  <ion-icon name="create" color="tertiary" (click)="modalUpdate(user._id)"></ion-icon>
                 </td>
                 <td>
-                  <ion-icon name="trash" color="danger"></ion-icon>
+                  <ion-icon name="trash" color="danger" (click)="presentAlertConfirm(user._id)"></ion-icon>
                 </td>
               </tr>
             </tbody>

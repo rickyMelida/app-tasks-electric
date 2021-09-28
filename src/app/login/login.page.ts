@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ModalServerConfigurationPage } from '../modal-server-configuration/modal-server-configuration.page';
 import { TokenResponse } from '../models/responseToken.interface';
 import { AuthService } from '../services/auth.service';
@@ -14,11 +14,13 @@ import { AuthService } from '../services/auth.service';
 
 export class LoginPage implements OnInit {
   dataUser: any;
-  alert: boolean = false;
-  messageError: string;
   server: string = !localStorage.getItem('server') ? 'firebase' : localStorage.getItem('server');
 
-  constructor(private authService: AuthService, private router: Router, public modalController: ModalController) {
+  constructor(private authService: AuthService, 
+              private router: Router, 
+              public modalController: ModalController,
+              private toastController: ToastController
+  ) {
     this.dataUser = { username: '', email: '', password: '' };
   }
 
@@ -31,18 +33,13 @@ export class LoginPage implements OnInit {
   getDataUser() {
     this.authService.signin(this.dataUser).toPromise()
     .then((res: any) => {
-        this.alert = false;
         localStorage.setItem('username', res.username);
         localStorage.setItem('token', res.token);
         this.router.navigate(['/main']);
-        console.log(res);
         
       })
       .catch((err: any) => {
-        console.log(err);
-        
-        this.alert = true;
-        this.messageError  = err.error.text;
+        this.messageToast(err.error.text,'danger')
       });
   }
 
@@ -52,7 +49,8 @@ export class LoginPage implements OnInit {
       cssClass: 'my-styles'
     });
 
-    const  data  = (await modal).onDidDismiss().then((res: any)=>{
+    const data  = (await modal).onDidDismiss()
+    .then((res: any)=>{
       this.server = res.data.data.serv;
 
     }).catch(err=>{
@@ -61,6 +59,15 @@ export class LoginPage implements OnInit {
     })
 
     return (await modal).present();
+  }
+
+  async messageToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color
+    });
+    toast.present();
   }
 
 
